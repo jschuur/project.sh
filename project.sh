@@ -4,6 +4,7 @@ function project {
   # or CODE_EDITOR=$EDITOR for your default editor
   CODE_EDITOR=code
   DESCRIPTION="${2:-"A new and exciting project"}"
+  INSPIRATION="You can do the thing!"
   AUTHOR="Your Name <you@email.com>"
 
   if [ -d "$PROJECTS_DIR/$1" ]; then
@@ -29,6 +30,11 @@ function project {
   fi
 
   echo -e "node_modules\n.env" > .gitignore
+
+  if [ -x "$(command -v say)" ]; then
+    echo $INSPIRATION
+    say $INSPIRATION
+  fi
 
   $CODE_EDITOR .
 }
