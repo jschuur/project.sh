@@ -1,6 +1,7 @@
-function project {
-  PROJECTS_DIR=~/Code/Personal
-  CONFIG_DIR=~/.config/project.sh
+function create_project {
+
+  PROJECTS_DIR=${HOME}/Code/Personal
+  CONFIG_DIR=${HOME}/.config/project.sh
   # PACKAGE_INIT="npm init -y"
   # PACKAGE_INIT="yarn init -y"
   PACKAGE_INIT="pnpm init"
@@ -10,17 +11,10 @@ function project {
   INSPIRATION="You can do the thing!"
   AUTHOR="Your Name <you@email.com>"
 
-  if [ -d "$PROJECTS_DIR/$1" ]; then
-    echo "Opening existing project $1 in your projects directory..."
-    cd $PROJECTS_DIR/$1
-
-    $CODE_EDITOR .
-    return
+  if [ ! -d "${PROJECTS_DIR}/${1}" ]; then
+    mkdir -p "${PROJECTS_DIR}/${1}"
   fi
-
-  cd $PROJECTS_DIR
-  mkdir -p $1
-  cd $1
+  cd "${PROJECTS_DIR}/${1}"
 
   git init > /dev/null
   eval "$PACKAGE_INIT > /dev/null"
@@ -37,8 +31,13 @@ function project {
 
   echo $INSPIRATION
   if [ -x "$(command -v say)" ]; then
+    # You can also do `if [[ $(which say) ]];then...` to test for existence of an executable in your $PATH
+    # Or you could do a host check and see if you're on Darwin (MacOS) and run the say command, since `say`
+    # is installed on all Mac desktop operating systems... since Jaguar, I think? Maybe it was Panther. 
     say $INSPIRATION
   fi
 
-  $CODE_EDITOR .
+  echo "Opening existing project \"${1}\" in your projects directory..."
+  ${CODE_EDITOR} "${PROJECTS_DIR}/${1}"
+
 }
