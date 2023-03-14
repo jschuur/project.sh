@@ -1,6 +1,9 @@
 function project {
   PROJECTS_DIR=~/Code/Personal
   CONFIG_DIR=~/.config/project.sh
+  # PACKAGE_INIT="npm init -y"
+  # PACKAGE_INIT="yarn init -y"
+  PACKAGE_INIT="pnpm init"
   # or CODE_EDITOR=$EDITOR for your default editor
   CODE_EDITOR=code
   DESCRIPTION="${2:-"A new and exciting project"}"
@@ -20,7 +23,8 @@ function project {
   cd $1
 
   git init > /dev/null
-  npm init -y > /dev/null
+  eval "$PACKAGE_INIT > /dev/null"
+  # modifies existing package.json https://docs.npmjs.com/cli/v9/commands/npm-pkg
   npm pkg set type='module'
   npm pkg set author=$AUTHOR
   npm pkg set description=$DESCRIPTION
@@ -31,8 +35,8 @@ function project {
 
   echo -e "node_modules\n.env" > .gitignore
 
+  echo $INSPIRATION
   if [ -x "$(command -v say)" ]; then
-    echo $INSPIRATION
     say $INSPIRATION
   fi
 
