@@ -19,8 +19,8 @@ function project {
   mkdir -p $1
   cd $1
 
-  git init
-  npm init -y
+  git init > /dev/null
+  npm init -y > /dev/null
   npm pkg set type='module'
   npm pkg set author=$AUTHOR
   npm pkg set description=$DESCRIPTION
