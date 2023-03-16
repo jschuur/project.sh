@@ -34,6 +34,8 @@ function project {
   fi
 
   echo -e "node_modules\n.env" > .gitignore
+  git add .
+  git commit -m 'initial commit'
 
   echo $INSPIRATION
   if [ -x "$(command -v say)" ]; then
